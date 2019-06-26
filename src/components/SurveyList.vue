@@ -37,13 +37,13 @@
 
 <script>
 // import { setPriority } from 'os';
-// import {Stitch,
-//         RemoteMongoClient
-// } from "mongodb-stitch-browser-sdk"
+import {//Stitch,
+        RemoteMongoClient
+} from "mongodb-stitch-browser-sdk"
 
 export default {
     name: "SurveyList",
-    props: ["db"],
+    props: ["stitchClient"],
     data() {
         return {
             error: '',
@@ -59,7 +59,8 @@ export default {
                     <div class="col-md-1"><small><strong>Edit</strong><small></div>
                 </div>`,
             surveys: [],
-            dummy: 'Still here'
+            db: '',
+            dummy: ''
         }
     },
     methods: {
@@ -76,40 +77,36 @@ export default {
             this.$emit('error', this.error);
         },
         fetchSurveys() {
-            this.setProgress(this.dummy);
             this.setProgress("Fetching list of surveys from Atlas");
-            let collection;
-            try {
-                collection = this.$props.db.collection("questions")
-            }
-            catch (err) {
-                this.setError(`Couldn't find the 'questions' collection in MongoDB Atlas: ${err}`);
-                return;
-            }
-            this.setProgress("Found the collection in Atlas; fetching survey list");
-            collection.find({}, {
-                projection:{_id: 0, surveyName: 1, notes: 1, lastUpdated: 1, lastUpdatedBy: 1, surveyTitle: 1},
-                sort: {_id: -1}})
+            this.db.collection("questions")
+            .find({},
+                {
+                    projection:{_id: 0, surveyName: 1, notes: 1, lastUpdated: 1, lastUpdatedBy: 1, surveyTitle: 1},
+                sort: {_id: -1}
+                })
             .asArray()
             .then(docs => {
                 this.surveys = docs;
                 this.setProgress("Fetched the set of surveys from MongoDB Atlas.");
             })
-            .catch(err => {
-                this.setError(`Failed to fetch the set of surveys from MongoDB Atlas: ${err}`);
-            });
+            .catch (err => {
+                this.setError(`Couldn't find the 'questions' collection in MongoDB Atlas: ${err}`);
+                return;
+            })
         }
     },
-    mounted() {
-        // this.fetchSurveys();
+    created () {
+        this.db = this.stitchClient
+            .getServiceClient(RemoteMongoClient.factory, "mongodb-atlas")
+            .db("survey");
 
+        this.fetchSurveys();
     }
 }
 </script>
 <style scoped>
     li {
         text-align: left;
-        list-style-type: none;
+        list-style-type: none; 
     }
 </style>
-

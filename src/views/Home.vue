@@ -2,7 +2,7 @@
   <div class="home">
     <AnonymousAuth v-bind:originalStitchClient="stitchClient" v-on:stitch-client="setStitchClient" v-on:db="setDb" v-on:error="setError"> </AnonymousAuth>
     <div id="survey-list-container">
-      <SurveyList v-bind:db="db" v-on:error="setError" v-on:success="setOK" v-on:progress="setProgress"/>
+      <SurveyList v-bind:stitchClient="stitchClient" v-on:error="setError" v-on:success="setOK" v-on:progress="setProgress"/>
     </div>
     <div id="status-message">
         <ProgressMessage v-bind:progressState="progressState"/>
