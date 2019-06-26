@@ -1,20 +1,38 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div id="nav">
+      <!-- <router-link v-bind:to="{name: 'home', params: {stitchClient: 2, test:1}}">Home</router-link> | -->
+      <!-- <router-link v-bind:to="{name: 'home'}">Home</router-link> -->
+      <!-- <router-link to="/about">About</router-link> -->
+    </div>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Vue from 'vue'
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'survey-vue/survey-vue'
+import 'survey-vue/survey.css'
+// import { Stitch } from "mongodb-stitch-browser-sdk";
+//import stitch from 'mongodb-stitch-server-sdk'
+Vue.use(BootstrapVue);
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  name: "survey-shrew",
+  data() {
+    return {
+      // stitchClient: null
+    }
+  },
+  created() {
+    // this.stitchClient = Stitch.initializeDefaultAppClient("survey-xyuov");
   }
 }
 </script>
+
 
 <style>
 #app {
