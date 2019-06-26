@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <AnonymousAuth v-bind:originalStitchClient="stitchClient" v-on:stitch-client="setStitchClient" v-on:db="setDb" v-on:error="setError"> </AnonymousAuth>
+    <AnonymousAuth v-bind:stitchClient="stitchClient" v-on:db="setDb" v-on:error="setError"> </AnonymousAuth>
     <div id="survey-list-container">
       <SurveyList v-bind:stitchClient="stitchClient" v-on:error="setError" v-on:success="setOK" v-on:progress="setProgress"/>
     </div>
@@ -23,7 +23,7 @@ import SurveyList from '../components/SurveyList.vue'
 
 export default {
   name: 'home',
-  // props: ["stitchClient", "test"],
+  props: ["stitchClient"],
   components: {
     ErrorMessage,
     ProgressMessage,
@@ -36,8 +36,8 @@ export default {
       errorState: '',
       progressState: '',
       okState: '',
-      db: '',
-      stitchClient: ''
+      db: ''
+      //stitchClient: ''
       // stitchClientID: ''
     }
   },

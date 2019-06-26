@@ -5,7 +5,7 @@
       <!-- <router-link v-bind:to="{name: 'home'}">Home</router-link> -->
       <!-- <router-link to="/about">About</router-link> -->
     </div>
-    <router-view/>
+    <router-view v-bind:stitchClient="stitchClient"></router-view>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'survey-vue/survey-vue'
 import 'survey-vue/survey.css'
-// import { Stitch } from "mongodb-stitch-browser-sdk";
+import { Stitch } from "mongodb-stitch-browser-sdk";
 //import stitch from 'mongodb-stitch-server-sdk'
 Vue.use(BootstrapVue);
 
@@ -24,11 +24,11 @@ export default {
   name: "survey-shrew",
   data() {
     return {
-      // stitchClient: null
+      stitchClient: ""
     }
   },
   created() {
-    // this.stitchClient = Stitch.initializeDefaultAppClient("survey-xyuov");
+    this.stitchClient = Stitch.initializeDefaultAppClient("survey-xyuov");
   }
 }
 </script>

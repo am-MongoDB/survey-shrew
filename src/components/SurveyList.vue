@@ -19,8 +19,8 @@
                             <div class="row h-12">
                                 <div class="col-md-2"><small> {{survey.surveyName}} </small></div>
                                 <div class="col-md-3"><small> {{survey.surveyTitle}} </small></div>
-                                <div class="col-md-2"><small> {{survey.lastUpdatedBy}} </small></div>
-                                <div class="col-md-2"><small> {{survey.date}} {{survey.time}} </small></div>
+                                <div class="col-md-1"><small> {{survey.lastUpdatedBy}} </small></div>
+                                <div class="col-md-3"><small> {{survey.lastUpdated}}</small></div>
                                 <div class="col-md-1"><small><a :href="'/index.html?surveyName=' + survey.surveyName">Survey</a></small></div>
                                 <div class="col-md-1"><small><a :href="'/surveyResults.html?surveyName=' + survey.surveyName">Results</a></small></div>
                                 <div class="col-md-1"><small><a :href="'/addSurvey.html?surveyName=' + survey.surveyName">Edit</a></small></div>
@@ -52,8 +52,8 @@ export default {
                 `<div class="row h-12">
                     <div class="col-md-2"><small><strong>Survey Name</strong></small></div>
                     <div class="col-md-3"><small><strong>Survey Title</strong></small></div>
-                    <div class="col-md-2"><small><strong>Last Updated By</strong></small></div>
-                    <div class="col-md-2"><small><strong>Last Updated</strong></small></div>
+                    <div class="col-md-1"><small><strong>Author</strong></small></div>
+                    <div class="col-md-3"><small><strong>Last Updated</strong></small></div>
                     <div class="col-md-1"><small><strong>Survey</strong></small></div>
                     <div class="col-md-1"><small><strong>Results</strong></small></div>
                     <div class="col-md-1"><small><strong>Edit</strong><small></div>
@@ -69,6 +69,11 @@ export default {
             // eslint-disable-next-line
             console.log(msg);
             this.$emit('progress', this.progress);
+        },
+        setSuccess(msg) {
+            // eslint-disable-next-line
+            console.log(msg);
+            this.$emit('success', msg);
         },
         setError(msg) {
             this.error = msg;
@@ -87,7 +92,7 @@ export default {
             .asArray()
             .then(docs => {
                 this.surveys = docs;
-                this.setProgress("Fetched the set of surveys from MongoDB Atlas.");
+                this.setSuccess("Fetched the set of surveys from MongoDB Atlas.");
             })
             .catch (err => {
                 this.setError(`Couldn't find the 'questions' collection in MongoDB Atlas: ${err}`);
